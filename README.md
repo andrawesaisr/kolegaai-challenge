@@ -155,37 +155,6 @@ CREATE TABLE Documents (
 );
 ```
 
-## 🔒 Security Features
-
-- Secure file upload validation
-- AWS S3 secure configuration
-- Input sanitization
-- Error handling
-- Rate limiting
-
-## 🚀 Deployment
-
-### Backend
-
-1. Set up PostgreSQL database
-2. Configure environment variables
-3. Deploy Node.js application
-4. Set up AWS S3 bucket
-
-### Frontend
-
-1. Build production bundle: `npm run build`
-2. Deploy static files to hosting service
-
-## 🧪 Testing
-
-```bash
-# Run frontend tests
-cd frontend && npm test
-
-# Run backend tests
-cd backend && npm test
-```
 
 ## 📈 Future Improvements
 
@@ -196,32 +165,12 @@ cd backend && npm test
 - [ ] Document sharing capabilities
 - [ ] OCR integration
 
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
-
-## 👥 Authors
-
-- **Your Name** - _Initial work_ - [YourGithub](https://github.com/yourusername)
 
 ## 🙏 Acknowledgments
 
 - OpenAI for their powerful API
 - AWS for cloud storage solutions
 - Material-UI team for the component library
-
-## 📞 Support
-
-For support, email your@email.com or join our Slack channel.
-
 ```
 
 This README is:
