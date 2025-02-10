@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:15
+    container_name: kolegaai
+    restart: always
+    environment:
+      POSTGRES_DB: kolegaai
+      POSTGRES_USER: andrawes
+      POSTGRES_PASSWORD: andrawes
+    ports:
+      - "6789:5432" # Maps container's PostgreSQL (5432) to host port 6789
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+volumes:
+  pg_data:
