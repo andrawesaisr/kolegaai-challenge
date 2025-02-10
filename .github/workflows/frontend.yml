@@ -19,7 +19,7 @@ jobs:
 
     env:
       AWS_REGION: us-east-1
-      DIST_DIR: frontend/build
+      DIST_DIR: build
       PROD_BUCKET_NAME: kolegaaiawebssignment
       NODE_VERSION: ${{ vars.NODE_VERSION }}
       PROD_DISTRIBUTION_ID: ${{ vars.PROD_DISTRIBUTION_ID }}
