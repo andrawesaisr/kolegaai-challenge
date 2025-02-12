@@ -51,7 +51,11 @@ jobs:
         working-directory: frontend
         env:
           REACT_APP_API_URL: ${{ env.REACT_APP_API_URL }}
-        run: npm run build
+        run: |
+          echo ${{env.REACT_APP_API_URL}}
+          echo ${{vars.REACT_APP_API_URL}}
+          export REACT_APP_API_URL=${{ env.REACT_APP_API_URL }}
+          npm run build
 
       - name: Check if AWS CLI is installed
         run: |
