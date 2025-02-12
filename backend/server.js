@@ -12,7 +12,7 @@ const port = process.env.PORT || 5000;
 
 app.use(
   cors({
-    origin: "https://d2em15x0n3x3rk.cloudfront.net/",
+    origin: "http://kolegaaiawebssignment.s3-website-us-east-1.amazonaws.com/",
     methods: "GET,POST,DELETE",
     allowedHeaders: "Content-Type,Authorization",
   })
