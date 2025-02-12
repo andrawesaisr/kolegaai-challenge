@@ -23,6 +23,7 @@ jobs:
       PROD_BUCKET_NAME: kolegaaiawebssignment
       NODE_VERSION: ${{ vars.NODE_VERSION }}
       PROD_DISTRIBUTION_ID: ${{ vars.PROD_DISTRIBUTION_ID }}
+      REACT_APP_API_URL: ${{ vars.REACT_APP_API_URL }}
 
     steps:
       - name: Checkout code
