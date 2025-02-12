@@ -10,7 +10,14 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 5000;
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://d2em15x0n3x3rk.cloudfront.net/",
+    methods: "GET,POST,DELETE",
+    allowedHeaders: "Content-Type,Authorization",
+  })
+);
+
 app.use(express.json());
 
 const upload = multer({
