@@ -1,0 +1,86 @@
+name: Deploy Frontend
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+    - "frontend/**"
+  workflow_dispatch:
+    inputs:
+      invalidateCache:
+        description: "Invalidate cache"
+        required: true
+        default: "false"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      AWS_REGION: us-east-1
+      DIST_DIR: build
+      PROD_BUCKET_NAME: kolegaaiawebssignment
+      NODE_VERSION: ${{ vars.NODE_VERSION }}
+      PROD_DISTRIBUTION_ID: ${{ vars.PROD_DISTRIBUTION_ID }}
+      REACT_APP_API_URL: ${{ vars.REACT_APP_API_URL }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Cache Node.js modules
+        id: cache-node-modules
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('frontend/package.json') }}-${{ github.event.inputs.invalidateCache }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ hashFiles('frontend/package.json') }}
+
+      - name: Install dependencies
+        working-directory: frontend
+        run: npm install --force
+
+      - name: Build the project
+        working-directory: frontend
+        run: npm run build
+
+      - name: Check if AWS CLI is installed
+        run: |
+          if ! command -v aws &> /dev/null; then
+            echo "AWS CLI not found. Installing..."
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            sudo ./aws/install
+          else
+            echo "AWS CLI is already installed."
+          fi
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Upload to S3
+        working-directory: frontend
+        env:
+          BUCKET_NAME: ${{ github.ref == 'refs/heads/main' && env.PROD_BUCKET_NAME }}
+        run: aws s3 sync ${{ env.DIST_DIR }} s3://${{ env.BUCKET_NAME }}/ --delete
+
+      - name: Invalidate CloudFront cache
+        env:
+          DISTRIBUTION_ID: ${{ github.ref == 'refs/heads/main' && env.PROD_DISTRIBUTION_ID }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ env.AWS_REGION }}
+        run: |
+          INVALIDATION_ID=$(aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths "/*" --query 'Invalidation.Id' --output text)
+          echo "You can check the invalidation status at: https://us-east-1.console.aws.amazon.com/cloudfront/v3/home?region=us-east-1#/distributions/$DISTRIBUTION_ID/invalidations/details/$INVALIDATION_ID"
