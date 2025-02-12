@@ -17,7 +17,7 @@ import axios from "axios";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 
-const API_URL = "http://localhost:5000/api";
+const API_URL = process.env.REACT_APP_API_URL;
 
 // Styled Components
 const DropZone = styled(Paper)(({ theme, isDragActive }) => ({
