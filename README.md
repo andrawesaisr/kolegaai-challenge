@@ -1,11 +1,8 @@
-Here's a more focused and organized README.md:
 
-````markdown:README.md
 # AI-Powered Document Management System
 
 A modern full-stack application that leverages AI to analyze, categorize, and manage documents intelligently. Built with React, Node.js, and PostgreSQL, featuring AWS S3 storage and OpenAI integration.
 
-![Project Banner](project-banner.png)
 
 ## ✨ Key Features
 
@@ -99,7 +96,7 @@ OPENAI_API_KEY=your_openai_api_key
 ### Frontend (.env)
 
 ```env
-REACT_APP_API_URL=http://localhost:5000/api
+REACT_APP_API_URL= backend_api_url
 ```
 
 ## 📁 Project Structure
@@ -155,17 +152,6 @@ CREATE TABLE Documents (
 );
 ```
 
-
-## 📈 Future Improvements
-
-- [ ] User authentication
-- [ ] Document version control
-- [ ] Advanced search filters
-- [ ] Batch upload support
-- [ ] Document sharing capabilities
-- [ ] OCR integration
-
-
 ## 🙏 Acknowledgments
 
 - OpenAI for their powerful API
@@ -173,19 +159,7 @@ CREATE TABLE Documents (
 - Material-UI team for the component library
 ```
 
-This README is:
-- More visually appealing with emojis
-- Better organized with clear sections
-- More concise while maintaining important information
-- Includes quick start guide
-- Clear API documentation
-- Future improvements section
-- Support information
-
-Remember to:
-1. Replace placeholder values (usernames, emails, etc.)
-2. Add actual project screenshots/images
-3. Update the features list based on your implementation
-4. Modify the deployment instructions based on your hosting choices
-5. Update the license information if needed
-```
+## deployment
+- backend server on EC2 instance, port 4000 with PM2 to keep the server live.
+- frontend on s3 bucket with Pipeline to automate deploying whenever pushed to main branch. 
+- postgreSQL on AWS RDS databasse.
